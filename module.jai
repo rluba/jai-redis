@@ -246,7 +246,8 @@ try_parse_resp_value :: (data: string) -> result: Parse_Result, Resp_Value, rema
     remainder := slice(data, 1, data.count - 1);
     if type == {
         case .NULL;
-            return .SUCCESS, .{type = .NULL}, remainder;
+            if remainder.count < 2 return .NOT_ENOUGH_DATA, .{}, data;
+            return .SUCCESS, .{type = .NULL}, slice(remainder, 2, remainder.count - 2);
 
         case .ERROR; #through;
         case .SIMPLE_STRING; #through;
