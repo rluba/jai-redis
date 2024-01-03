@@ -64,7 +64,7 @@ try_read_and_parse_responses :: (redis: *Redis_Connection, partial_data: *String
             print_to_builder(*builder, "% ", formatInt(new_data[i], base = 16, minimum_digits = 2));
         }
 
-        log("Redis said: %", builder_to_string(*builder, allocator = temp));
+        log("Redis said: %", builder_to_string(*builder,, temp));
     }
 
     advance_through_ensured_space(partial_data, bytes_read);
