@@ -24,7 +24,7 @@ add_redis_command :: (builder: *String_Builder, args: .. Any) -> bool {
             case .INTEGER;
                 string_arg = tprint("%", arg); // @Speed
             case .STRING;
-                string_arg = << cast(*string) arg.value_pointer;
+                string_arg = (cast(*string) arg.value_pointer).*;
             case;
                 assert(false, "Unsupported argument type: %", arg.type.type);
                 return false;
@@ -88,7 +88,7 @@ try_read_and_parse_responses :: (redis: *Redis_Connection, partial_data: *String
     new_pending_data: String_Builder;
     new_pending_data.allocator = partial_data.allocator;
     append(*new_pending_data, remainder);
-    <<partial_data = new_pending_data;
+    partial_data.* = new_pending_data;
     return true, results;
 }
 
